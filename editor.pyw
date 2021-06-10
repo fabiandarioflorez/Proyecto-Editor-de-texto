@@ -25,17 +25,32 @@ def abrir():
         fichero.close()
         root.title(ruta + ' - FaFa texto Editor Inator')
 
-
-
 def guardar():
     global ruta
     mensaje.set('Guardar fichero')
-
+    if ruta != '':
+        contenido = texto.get(1.0,'end-1c')
+        fichero = open(ruta, 'w+')
+        fichero.write(contenido)
+        fichero.close()
+        mensaje.set('Fichero guardado Correctamente')
+    else:
+        guardar_como()
+        
 def guardar_como():
     global ruta
     mensaje.set('Guardar fichero como')
-
-
+    fichero = FileDialog.asksaveasfile(title='Guardar fichero', mode='w', defaultextension='.txt')
+    if fichero is not None:
+        ruta = fichero.name
+        contenido = texto.get(1.0,'end-1c')
+        fichero = open(ruta, 'w+')
+        fichero.write(contenido)
+        fichero.close()
+        mensaje.set('Fichero guardado Correctamente')
+    else:
+        mensaje.set('Guardado cancelado')
+        ruta = ''
 
 # Configuramos la raiz
 root = Tk()
